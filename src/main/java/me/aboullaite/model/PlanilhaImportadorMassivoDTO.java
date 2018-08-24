@@ -1,25 +1,28 @@
 package me.aboullaite.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class PlanilhaImportadorMassivoDTO {
 
-    private List<CamposBasePlanilha> camposBase;
-    private List<CamposCategoriaPlanilha> camposCategorias;
+    private Map<String, List<String>> camposBase;
+    private Map<String, List<CamposUdaPlanilha>> udasPorCategoria;
 
-    public List<CamposBasePlanilha> getCamposBase() {
+
+    public Map<String, List<String>> getCamposBase() {
         return camposBase;
     }
 
-    public void setCamposBase(List<CamposBasePlanilha> camposBase) {
+    public void setCamposBase(Map<String, List<String>> camposBase) {
         this.camposBase = camposBase;
     }
 
-    public List<CamposCategoriaPlanilha> getCamposCategorias() {
-        return camposCategorias;
+    public Map<String, List<CamposUdaPlanilha>> getUdasPorCategoria() {
+        return udasPorCategoria;
     }
 
-    public void setCamposCategorias(List<CamposCategoriaPlanilha> camposCategorias) {
-        this.camposCategorias = camposCategorias;
+    public void setUdasPorCategoria(Map<String, List<CamposUdaPlanilha>> udasPorCategoria) {
+        this.udasPorCategoria = udasPorCategoria;
     }
+
 }

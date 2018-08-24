@@ -7,11 +7,6 @@ public class CamposUdaPlanilha {
     private String nomeUda;
     private List<String> valoresUda;
 
-    public CamposUdaPlanilha(String nomeUda, List<String> valoresUda) {
-        this.nomeUda = nomeUda;
-        this.valoresUda = valoresUda;
-    }
-
     public String getNomeUda() {
         return nomeUda;
     }

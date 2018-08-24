@@ -1,7 +1,5 @@
 package me.aboullaite.controller;
 
-import me.aboullaite.model.CamposBasePlanilha;
-import me.aboullaite.model.CamposCategoriaPlanilha;
 import me.aboullaite.model.CamposUdaPlanilha;
 import me.aboullaite.model.PlanilhaImportadorMassivoDTO;
 import me.aboullaite.service.UserService;
@@ -10,8 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class ExportController {
@@ -31,23 +28,52 @@ public class ExportController {
     private PlanilhaImportadorMassivoDTO build() {
         PlanilhaImportadorMassivoDTO dto  = new PlanilhaImportadorMassivoDTO();
 
-        List<String> valoresUda1 = Arrays.asList("azul", "verde", "amarelo");
-        List<String> valoresUda2 = Arrays.asList("pequeno", "medio", "grande");
-        List<String> valoresUda3 = Arrays.asList("azul1", "verde1", "amarelo1");
-        List<String> valoresUda4 = Arrays.asList("pequeno1", "medio1", "grande1");
+        List<String> listaBase1 = Arrays.asList("ID Item - utilizado para agrupar os skus");
+        List<String> listaBase2 = Arrays.asList(
+                "Nome Produto *",
+                "Descrição Produto",
+                "SKU Lojista",
+                "SKU Via Varejo",
+                "Estoque (Unidades) *",
+                "EAN ou ISBN",
+                "Marca");
 
-        List<CamposUdaPlanilha> udas1 = Arrays.asList(new CamposUdaPlanilha("cor", valoresUda1), new CamposUdaPlanilha("tamanho", valoresUda2));
-        List<CamposUdaPlanilha> udas2 = Arrays.asList(new CamposUdaPlanilha("cor1", valoresUda3), new CamposUdaPlanilha("tamanho1", valoresUda4));
+        List<String> listaBase3 = Arrays.asList("Preço de Venda *");
+        List<String> listaBase4 = Arrays.asList("Altura (cm) *", "Largura (cm) *", "Profundidade (cm) *", "Peso (Kg) *");
+        List<String> listaBase5 = Arrays.asList("Tempo Compra / Fabricação", "Garantia");
+        List<String> listaBase6 = Arrays.asList("url imagem 1 *", "url imagem 2", "url imagem 3", "url imagem 4");
 
-        List<CamposCategoriaPlanilha> categorias = Arrays.asList(new CamposCategoriaPlanilha("eletro", udas1), new CamposCategoriaPlanilha("alimentos", udas2));
+        Map<String, List<String>> camposBase = new LinkedHashMap<>();
+        camposBase.put("código agrupador de produtos", listaBase1);
+        camposBase.put("", listaBase2);
+        camposBase.put("preço", listaBase3);
+        camposBase.put("dimensões", listaBase4);
+        camposBase.put("dados da compra", listaBase5);
+        camposBase.put("imagens", listaBase6);
 
-        List<CamposBasePlanilha> base = Arrays.asList(new CamposBasePlanilha("produto"),
-                                                      new CamposBasePlanilha("titulo"),
-                                                      new CamposBasePlanilha("descricao"),
-                                                      new CamposBasePlanilha("preco"));
+        dto.setCamposBase(camposBase);
 
-        dto.setCamposBase(base);
-        dto.setCamposCategorias(categorias);
+        CamposUdaPlanilha uda1 = new CamposUdaPlanilha();
+        uda1.setNomeUda("Cor");
+        uda1.setValoresUda(Arrays.asList("azul", "vermelho", "preto"));
+
+        CamposUdaPlanilha uda2 = new CamposUdaPlanilha();
+        uda2.setNomeUda("Tamanho");
+        uda2.setValoresUda(Arrays.asList("p", "m", "g"));
+
+        CamposUdaPlanilha uda3 = new CamposUdaPlanilha();
+        uda3.setNomeUda("Armazenamento");
+        uda3.setValoresUda(Arrays.asList("32", "64", "128"));
+
+        CamposUdaPlanilha uda4 = new CamposUdaPlanilha();
+        uda4.setNomeUda("Voltagem");
+        uda4.setValoresUda(Arrays.asList("110", "220", "bivolt"));
+
+        Map<String, List<CamposUdaPlanilha>> camposCat = new LinkedHashMap<>();
+        camposCat.put("Roupas", Arrays.asList(uda1, uda2));
+        camposCat.put("Eletronicos", Arrays.asList(uda3, uda4));
+
+        dto.setUdasPorCategoria(camposCat);
 
         return dto;
     }
