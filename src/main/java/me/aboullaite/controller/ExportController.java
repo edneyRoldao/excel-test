@@ -25,7 +25,7 @@ public class ExportController {
     }
 
     @SuppressWarnings("unchecked")
-    private PlanilhaImportadorMassivoDTO build() {
+    public PlanilhaImportadorMassivoDTO build() {
         PlanilhaImportadorMassivoDTO dto  = new PlanilhaImportadorMassivoDTO();
 
         List<String> listaBase1 = Arrays.asList("ID Item - utilizado para agrupar os skus");
